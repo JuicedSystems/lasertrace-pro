@@ -29,7 +29,7 @@ Mode rule (mm, `cl` = centerline max width, default 0.6): widest solid region
 
 ## Static presets
 
-Each preset is a JSON file in `presets/` (`Preset` model: `stack`, `trace`,
+Each preset is a JSON file in `lasertrace/preset_data/` (inside the package, so it survives `pip install`) (`Preset` model: `stack`, `trace`,
 `export`). Copy one to `~/.lasertrace/presets/<name>.json` to customise; user
 presets override built-ins with the same name. The desktop app's **Save
 preset** button writes there.

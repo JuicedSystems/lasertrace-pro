@@ -5,7 +5,9 @@ from pathlib import Path
 
 from .models import Preset
 
-PRESET_DIR = Path(__file__).resolve().parents[1] / "presets"
+#: Built-in presets ship *inside* the package, so they survive `pip install`.
+#: (They used to live at the repo root, which meant a wheel had none of them.)
+PRESET_DIR = Path(__file__).resolve().parent / "preset_data"
 USER_PRESET_DIR = Path.home() / ".lasertrace" / "presets"
 
 ALIASES = {

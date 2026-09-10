@@ -25,7 +25,7 @@ cd lasertrace-pro
 python3.11 -m venv .venv
 ./.venv/bin/pip install -r requirements-ui.txt
 ./.venv/bin/pip install -e .
-pytest          # 111 tests, ~2 minutes, green from a fresh clone
+pytest          # 118 tests, ~2 minutes, green from a fresh clone
 ```
 
 The fixture set is committed, so tests run immediately. To regenerate it:

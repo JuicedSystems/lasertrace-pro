@@ -39,7 +39,7 @@ Issues = "https://github.com/JuicedSystems/lasertrace-pro/issues"
 
 [project.optional-dependencies]
 ui = ["PySide6>=6.6"]
-dev = ["pytest>=7"]
+dev = ["pytest>=7", "build>=1.0"]
 
 [project.scripts]
 lasertrace = "lasertrace.cli:main"
@@ -47,6 +47,12 @@ lasertrace-ui = "lasertrace_ui.main:main"
 
 [tool.setuptools.packages.find]
 include = ["lasertrace*"]
+
+# Data files must be declared or a wheel ships nothing but .py: the built-in
+# presets and the app icon are both loaded by path at runtime.
+[tool.setuptools.package-data]
+lasertrace = ["preset_data/*.json"]
+lasertrace_ui = ["assets/*.png", "assets/*.ico"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

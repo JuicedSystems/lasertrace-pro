@@ -83,8 +83,27 @@ shaded light-to-dark, with the pass plan and material numbers on the right.
 
 ## Install
 
-Python **3.11+**. Works on Windows, macOS and Linux; the shop workflow is
-Windows-first.
+Needs Python **3.11+** and nothing else — no compiler, no system libraries.
+Works on Windows, macOS and Linux; the shop workflow is Windows-first.
+
+### Just use it
+
+```bash
+pip install "lasertrace[ui] @ git+https://github.com/JuicedSystems/lasertrace-pro.git"
+
+lasertrace-ui                                  # desktop app
+lasertrace logo.png --width-mm 38 --out logo.dxf   # or the CLI
+```
+
+Both commands land on your PATH. Drop the `[ui]` extra for the **core only** —
+the tracer and CLI have no Qt dependency at all, which is what you want on a
+server or in a batch job.
+
+> Prefer a virtual environment so this doesn't touch your system Python:
+> `py -3.11 -m venv .venv` then `.\.venv\Scripts\pip install ...` on Windows,
+> or `python3.11 -m venv .venv` then `./.venv/bin/pip install ...` elsewhere.
+
+### Work on it
 
 <details open>
 <summary><b>Windows (PowerShell)</b></summary>
@@ -93,10 +112,9 @@ Windows-first.
 git clone https://github.com/JuicedSystems/lasertrace-pro.git
 cd lasertrace-pro
 py -3.11 -m venv .venv
-.\.venv\Scripts\pip install -r requirements-ui.txt
-.\.venv\Scripts\pip install -e .
+.\.venv\Scripts\pip install -r requirements-ui.txt   # editable install + deps + pytest
 
-.\.venv\Scripts\python -m lasertrace_ui.main      # desktop app
+.\.venv\Scripts\python -m lasertrace_ui.main
 ```
 </details>
 
@@ -107,31 +125,22 @@ py -3.11 -m venv .venv
 git clone https://github.com/JuicedSystems/lasertrace-pro.git
 cd lasertrace-pro
 python3.11 -m venv .venv
-./.venv/bin/pip install -r requirements-ui.txt
-./.venv/bin/pip install -e .
+./.venv/bin/pip install -r requirements-ui.txt        # editable install + deps + pytest
 
-./.venv/bin/python -m lasertrace_ui.main          # desktop app
+./.venv/bin/python -m lasertrace_ui.main
 ```
 </details>
 
-<details>
-<summary><b>Core only, no GUI</b></summary>
-
-The tracing core has **no Qt dependency**. For servers, batch jobs or
-embedding:
+Then run the tests — green straight from a clone, because the fixture set is
+committed:
 
 ```bash
-pip install -r requirements.txt && pip install -e .
-lasertrace logo.png --width-mm 38 --out logo.dxf
+pytest            # 118 tests, ~2 minutes
 ```
-</details>
 
-Then run the tests — they should be green straight from a clone (the fixture
-set is committed):
-
-```bash
-pytest            # 111 tests, ~2 minutes
-```
+Use `requirements.txt` instead for the headless core. Both files just install
+the project's own extras, so [`pyproject.toml`](pyproject.toml) stays the
+single source of truth for versions.
 
 ## 60-second tour
 
@@ -218,9 +227,11 @@ scans, tuned from measured noise), `auto-lines` (line art), `auto-depth`
 `cut-outer-engrave-inner`, `tiny-logo`, `depth-relief`, `depth-coin`,
 `depth-photo-relief`.
 
-Each is a JSON file in [`presets/`](presets) you can copy and edit; your own
-presets live in `~/.lasertrace/presets/`. See
-[docs/PRESETS.md](docs/PRESETS.md).
+Each is a JSON file in
+[`lasertrace/preset_data/`](lasertrace/preset_data) — copy one as a starting
+point. **Your own presets belong in `~/.lasertrace/presets/`**, which is
+searched first and survives upgrades (the *Save preset* button writes there).
+See [docs/PRESETS.md](docs/PRESETS.md).
 
 ## Help lives in the app
 
@@ -272,7 +283,7 @@ The in-app help (**F1**) is the operator-facing summary of all of these.
 
 **Working today:** paste/open → preprocess stack → contour, centerline, hybrid
 or Potrace-sidecar trace → hygiene → four views → DXF/SVG/PLT/PDF/PNG export,
-with AUTO modes, a headless CLI, batch mode, a 38-fixture regression suite, 111
+with AUTO modes, a headless CLI, batch mode, a 38-fixture regression suite, 118
 tests, and depth (3D relief) engraving end to end.
 
 **Next:** geometry snap (recognising true circles, arcs and H/V/45° lines),

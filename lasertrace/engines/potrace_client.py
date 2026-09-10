@@ -20,7 +20,22 @@ from ..models import Cubic, Layer, Line, Path, PathGraph, Subpath
 from ..geometry.bezier import signed_area
 from .base import EngineContext
 
-SIDECAR = FsPath(__file__).resolve().parents[2] / "sidecars" / "potrace_sidecar" / "sidecar.py"
+def _sidecar_path() -> FsPath:
+    """Locate the GPL Potrace sidecar.
+
+    It is deliberately NOT shipped inside the wheel: bundling GPL-3 code with
+    the MIT package is exactly what the sidecar split exists to avoid. So an
+    installed copy finds nothing here, `available()` returns False, and the
+    tracer falls back to the contour engine with an ENGINE_FALLBACK warning.
+    Point `LASERTRACE_POTRACE_SIDECAR` at a checkout to enable it.
+    """
+    env = os.environ.get("LASERTRACE_POTRACE_SIDECAR")
+    if env:
+        return FsPath(env)
+    return FsPath(__file__).resolve().parents[2] / "sidecars" / "potrace_sidecar" / "sidecar.py"
+
+
+SIDECAR = _sidecar_path()
 
 
 def _sidecar_python() -> str:
