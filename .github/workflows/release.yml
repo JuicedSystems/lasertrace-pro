@@ -103,13 +103,36 @@ jobs:
   release:
     name: Draft release
     needs: build
+    # `always()` on purpose: the macos-13 (Intel) runner image is heavily
+    # contended and can sit queued for hours. One stuck or failed target must
+    # not hold the finished ones hostage - we publish whatever built, and the
+    # step below says plainly which platforms are in the release.
+    if: always() && (startsWith(github.ref, 'refs/tags/v') || inputs.draft_release)
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v') || inputs.draft_release
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with: { path: artifacts, merge-multiple: true }
-      - run: ls -la artifacts
+      - name: Which platforms made it
+        id: built
+        run: |
+          set -euo pipefail
+          ls -la artifacts
+          test -n "$(ls -A artifacts 2>/dev/null)" || { echo "no artifacts at all - nothing to release"; exit 1; }
+          {
+            echo "table<<EOF"
+            for f in artifacts/*.zip; do
+              base=$(basename "$f")
+              case "$base" in
+                *windows-x64*) what="Windows 10/11 (64-bit) — unzip anywhere, run \`LaserTracePro.exe\`" ;;
+                *macos-arm64*) what="macOS on Apple Silicon (M1 and later)" ;;
+                *macos-x64*)   what="macOS on Intel" ;;
+                *)             what="" ;;
+              esac
+              echo "| \`$base\` | $what |"
+            done
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
       - uses: softprops/action-gh-release@v2
         with:
           draft: true
@@ -120,9 +143,7 @@ jobs:
 
             | Download | For |
             |---|---|
-            | `LaserTracePro-windows-x64.zip` | Windows 10/11 (64-bit). Unzip anywhere, run `LaserTracePro.exe`. |
-            | `LaserTracePro-macos-arm64.zip` | macOS on Apple Silicon (M1 and later). |
-            | `LaserTracePro-macos-x64.zip` | macOS on Intel. |
+            ${{ steps.built.outputs.table }}
 
             **These builds are unsigned.** They are not code-signed by a paid
             Apple/Microsoft developer certificate, so the OS will warn you:
