@@ -84,10 +84,30 @@ shaded light-to-dark, with the pass plan and material numbers on the right.
 
 ## Install
 
-Needs Python **3.11+** and nothing else — no compiler, no system libraries.
-Works on Windows, macOS and Linux; the shop workflow is Windows-first.
+### Download the app (no Python needed)
 
-### Just use it
+The machine next to the laser shouldn't need a development environment.
+Standalone builds are on the
+[**releases page**](https://github.com/JuicedSystems/lasertrace-pro/releases):
+
+| Download | For |
+|---|---|
+| `LaserTracePro-windows-x64.zip` | Windows 10/11 (64-bit) — unzip anywhere, run `LaserTracePro.exe` |
+| `LaserTracePro-macos-arm64.zip` | macOS on Apple Silicon (M1 and later) |
+| `LaserTracePro-macos-x64.zip` | macOS on Intel |
+
+> **These builds are unsigned**, so the OS will warn you the first time.
+> On **Windows**, SmartScreen says "Windows protected your PC" → *More info* →
+> *Run anyway*. On **macOS**, right-click the app → *Open* → *Open*.
+> Code-signing needs paid Apple and Microsoft certificates that this project
+> doesn't have. If you'd rather not click through a warning, install from
+> source below — it's the same program.
+
+### Install with pip
+
+Needs Python **3.11+** and nothing else — no compiler, no system libraries.
+Works on Windows, macOS and Linux.
+
 
 ```bash
 pip install "lasertrace[ui] @ git+https://github.com/JuicedSystems/lasertrace-pro.git"
@@ -286,6 +306,7 @@ and bold text in **59** with all nine counters intact.
 | [PRESETS.md](docs/PRESETS.md) | Every preset and its parameters |
 | [TECH_STACK.md](docs/TECH_STACK.md) | Stack and licence audit |
 | [EZCAD_VERIFY.md](docs/EZCAD_VERIFY.md) | How to verify an export in EZCAD |
+| [BUILDING.md](docs/BUILDING.md) | Building the standalone Windows / macOS apps |
 
 The in-app help (**F1**) is the operator-facing summary of all of these.
 
@@ -294,11 +315,11 @@ The in-app help (**F1**) is the operator-facing summary of all of these.
 **Working today:** paste/open → preprocess stack → contour, centerline, hybrid
 or Potrace-sidecar trace → hygiene → four views → DXF/SVG/PLT/PDF/PNG export,
 with AUTO modes, a headless CLI, batch mode, a 38-fixture regression suite, 118
-tests, and depth (3D relief) engraving end to end.
+tests, depth (3D relief) engraving end to end, and standalone Windows / macOS
+builds.
 
-**Next:** geometry snap (recognising true circles, arcs and H/V/45° lines),
-the vtracer engine, and PyInstaller packaging so the shop machine doesn't need
-a Python install. See the roadmap in
+**Next:** geometry snap (recognising true circles, arcs and H/V/45° lines) and
+the vtracer engine. See the roadmap in
 [docs/TRACE_STRATEGY.md](docs/TRACE_STRATEGY.md).
 
 **Honest limits:** the tracer is black-and-white only — no colour separation.

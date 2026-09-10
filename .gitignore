@@ -24,3 +24,8 @@ reports/
 .idea/
 .DS_Store
 Thumbs.db
+
+# PyInstaller build output
+packaging/icon.icns
+packaging/icon.iconset/
+*.spec.bak
