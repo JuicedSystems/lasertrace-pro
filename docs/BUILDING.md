@@ -14,12 +14,18 @@ already, and `.github/workflows/release.yml` produces them on every `v*` tag.
 |---|---|---|
 | Windows x64 | `windows-latest` | `LaserTracePro/` → `LaserTracePro-windows-x64.zip` |
 | macOS Apple Silicon | `macos-14` | `LaserTrace Pro.app` → `LaserTracePro-macos-arm64.zip` |
-| macOS Intel | `macos-13` | `LaserTrace Pro.app` → `LaserTracePro-macos-x64.zip` |
 
-**PyInstaller cannot cross-compile.** A macOS app has to be built on macOS and
-a Windows exe on Windows, which is why the two mac architectures are two
-separate runners rather than a universal2 build — `macos-14` is arm64 and
-`macos-13` is x86_64.
+**PyInstaller cannot cross-compile.** A macOS app has to be built on macOS and a
+Windows exe on Windows.
+
+**There is no Intel macOS build.** It was in the matrix as `macos-13`, but that
+image is retired: the job sat queued for 45 minutes without ever being assigned
+a runner, which is worse than failing because it silently blocks the release.
+An Apple Silicon build is *not* a substitute — Rosetta translates x86 → ARM, not
+the reverse — so Intel Mac users install from source. If GitHub ships a working
+Intel image again, add it back to the matrix in
+`.github/workflows/release.yml` and the release notes pick it up automatically
+(the download table is generated from the artifacts that exist).
 
 ## Locally
 

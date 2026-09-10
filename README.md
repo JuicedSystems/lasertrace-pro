@@ -94,7 +94,11 @@ Standalone builds are on the
 |---|---|
 | `LaserTracePro-windows-x64.zip` | Windows 10/11 (64-bit) — unzip anywhere, run `LaserTracePro.exe` |
 | `LaserTracePro-macos-arm64.zip` | macOS on Apple Silicon (M1 and later) |
-| `LaserTracePro-macos-x64.zip` | macOS on Intel |
+
+**Intel Macs:** there is no app build — GitHub's Intel macOS runner image is
+retired, and an Apple Silicon build cannot run on Intel (Rosetta only translates
+x86 → ARM, not the reverse). [Install with pip](#install-with-pip) instead; it
+is the same program.
 
 > **These builds are unsigned**, so the OS will warn you the first time.
 > On **Windows**, SmartScreen says "Windows protected your PC" → *More info* →
