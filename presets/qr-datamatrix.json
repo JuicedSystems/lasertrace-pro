@@ -1,0 +1,21 @@
+{
+  "name": "qr-datamatrix",
+  "display_name": "QR / Data Matrix",
+  "description": "No smoothing, square corners, modules kept as separate rectangles; nothing rounded.",
+  "tags": ["qr", "barcode", "grid"],
+  "stack": {
+    "ops": [
+      {"op": "background_white", "enabled": true, "params": {"tolerance": 40}},
+      {"op": "threshold", "enabled": true, "params": {"method": "otsu", "bias": 0}},
+      {"op": "despeckle", "enabled": true, "params": {"min_area_mm2": 0.01}}
+    ]
+  },
+  "trace": {
+    "engine": "contour", "mode": "outline",
+    "detail": 1.0, "threshold": 128, "despeckle_mm2": 0.01, "corner_sharpness": 1.0,
+    "min_feature_mm": 0.05, "smoothness": 0.0,
+    "curve_tol_mm": 0.02, "gap_close_mm": 0.02, "node_budget": null,
+    "union_fills": true, "preserve_holes": true
+  },
+  "export": {"format": "dxf", "dxf_version": "R2000", "width_mm": 20.0, "origin": "bottom_left", "curves": "polyline", "flatten_tol_mm": 0.01, "precision": 3, "close_fills": true}
+}

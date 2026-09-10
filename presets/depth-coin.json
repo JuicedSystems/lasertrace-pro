@@ -1,0 +1,25 @@
+{
+  "name": "depth-coin",
+  "display_name": "Depth Coin / Medallion (brass)",
+  "description": "Coin-style relief on brass: 30 slices, 0.3 mm, light equalisation, feathered rim, 8 deg draft. Height map with black = deepest.",
+  "tags": ["depth", "3d", "coin", "brass"],
+  "stack": {"ops": []},
+  "trace": {
+    "engine": "contour", "mode": "outline",
+    "detail": 0.6, "threshold": 128, "despeckle_mm2": 0.0, "corner_sharpness": 0.4,
+    "min_feature_mm": 0.08, "smoothness": 0.6,
+    "curve_tol_mm": 0.025, "gap_close_mm": 0.05, "node_budget": null,
+    "union_fills": true, "preserve_holes": true
+  },
+  "depth": {
+    "enabled": true, "levels": 30, "dark_is_deep": true, "total_depth_mm": 0.3,
+    "material": "brass", "laser_w": 60.0, "z_step": true, "z_step_every_mm": 0.1,
+    "normalize": true, "depth_gamma": 1.0, "equalize": 0.2,
+    "smoothing_mm": 0.03, "edge_preserve": true, "zero_plane": "border", "floor": 0.02,
+    "photo_to_relief": false, "feather_mm": 0.05,
+    "min_island_mm2": 0.006, "draft_angle_deg": 8.0,
+    "quantize_png": false, "png_bits": 16, "png_black_is_deep": true,
+    "hatch": {"enabled": false, "spacing_mm": 0.025, "angle_start_deg": 0.0, "angle_step_deg": 37.0, "bidirectional": true, "contour_pass": true}
+  },
+  "export": {"format": "dxf", "dxf_version": "R2000", "width_mm": 40.0, "origin": "center", "curves": "polyline", "flatten_tol_mm": 0.015, "precision": 3, "close_fills": true}
+}

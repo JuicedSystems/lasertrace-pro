@@ -1,0 +1,23 @@
+{
+  "name": "thin-line-art",
+  "display_name": "Thin Line Art",
+  "description": "Centerline trace of line drawings: single stroke per line, breaks reconnected, no outline pairs.",
+  "tags": ["line", "centerline", "sketch"],
+  "stack": {
+    "ops": [
+      {"op": "background_white", "enabled": true, "params": {"tolerance": 40}},
+      {"op": "unsharp", "enabled": false, "params": {"amount": 0.6, "radius": 1.2}},
+      {"op": "threshold", "enabled": true, "params": {"method": "hysteresis", "low": 110, "high": 170}},
+      {"op": "morph_close", "enabled": true, "params": {"radius_mm": 0.04}},
+      {"op": "despeckle", "enabled": true, "params": {"min_area_mm2": 0.03}}
+    ]
+  },
+  "trace": {
+    "engine": "centerline", "mode": "centerline",
+    "detail": 0.6, "threshold": 128, "despeckle_mm2": 0.03, "corner_sharpness": 0.5,
+    "min_feature_mm": 0.15, "smoothness": 0.6,
+    "curve_tol_mm": 0.04, "gap_close_mm": 0.15, "node_budget": null,
+    "union_fills": false, "preserve_holes": true, "centerline_max_width_mm": 0.6
+  },
+  "export": {"format": "dxf", "dxf_version": "R2000", "width_mm": 50.0, "origin": "bottom_left", "curves": "polyline", "flatten_tol_mm": 0.02, "precision": 3, "close_fills": false}
+}

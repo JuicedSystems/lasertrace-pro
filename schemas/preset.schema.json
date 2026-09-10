@@ -1,0 +1,379 @@
+{
+  "$defs": {
+    "ExportProfile": {
+      "properties": {
+        "format": {
+          "default": "dxf",
+          "enum": [
+            "dxf",
+            "svg",
+            "plt",
+            "pdf",
+            "eps",
+            "png"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "dxf_version": {
+          "default": "R2000",
+          "enum": [
+            "R12",
+            "R2000"
+          ],
+          "title": "Dxf Version",
+          "type": "string"
+        },
+        "width_mm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 50.0,
+          "title": "Width Mm"
+        },
+        "height_mm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Height Mm"
+        },
+        "origin": {
+          "default": "bottom_left",
+          "enum": [
+            "top_left",
+            "bottom_left",
+            "center"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "flatten_layers": {
+          "default": false,
+          "title": "Flatten Layers",
+          "type": "boolean"
+        },
+        "curves": {
+          "default": "polyline",
+          "enum": [
+            "polyline",
+            "spline",
+            "arcs"
+          ],
+          "title": "Curves",
+          "type": "string"
+        },
+        "flatten_tol_mm": {
+          "default": 0.02,
+          "title": "Flatten Tol Mm",
+          "type": "number"
+        },
+        "precision": {
+          "default": 3,
+          "title": "Precision",
+          "type": "integer"
+        },
+        "close_fills": {
+          "default": true,
+          "title": "Close Fills",
+          "type": "boolean"
+        },
+        "strokes_to_fills": {
+          "default": false,
+          "title": "Strokes To Fills",
+          "type": "boolean"
+        },
+        "stroke_outline_width_mm": {
+          "default": 0.1,
+          "title": "Stroke Outline Width Mm",
+          "type": "number"
+        },
+        "layer_colors": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Layer Colors",
+          "type": "object"
+        },
+        "layer_aci": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Layer Aci",
+          "type": "object"
+        },
+        "cut_hairline_mm": {
+          "default": 0.01,
+          "title": "Cut Hairline Mm",
+          "type": "number"
+        },
+        "png_dpi": {
+          "default": 600,
+          "title": "Png Dpi",
+          "type": "integer"
+        },
+        "embed_preset": {
+          "default": true,
+          "title": "Embed Preset",
+          "type": "boolean"
+        }
+      },
+      "title": "ExportProfile",
+      "type": "object"
+    },
+    "PreprocessOp": {
+      "properties": {
+        "op": {
+          "enum": [
+            "crop",
+            "rotate",
+            "deskew",
+            "background_white",
+            "background_sample",
+            "upscale",
+            "denoise",
+            "bilateral",
+            "unsharp",
+            "levels",
+            "gamma",
+            "threshold",
+            "invert",
+            "knockout_halo",
+            "morph_open",
+            "morph_close",
+            "dilate",
+            "erode",
+            "despeckle",
+            "fill_holes",
+            "quantize"
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "enabled": {
+          "default": true,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "params": {
+          "additionalProperties": true,
+          "title": "Params",
+          "type": "object"
+        }
+      },
+      "required": [
+        "op"
+      ],
+      "title": "PreprocessOp",
+      "type": "object"
+    },
+    "PreprocessStack": {
+      "properties": {
+        "ops": {
+          "items": {
+            "$ref": "#/$defs/PreprocessOp"
+          },
+          "title": "Ops",
+          "type": "array"
+        }
+      },
+      "title": "PreprocessStack",
+      "type": "object"
+    },
+    "SnapSettings": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "lines_hv45": {
+          "default": true,
+          "title": "Lines Hv45",
+          "type": "boolean"
+        },
+        "circles": {
+          "default": true,
+          "title": "Circles",
+          "type": "boolean"
+        },
+        "rounded_rects": {
+          "default": true,
+          "title": "Rounded Rects",
+          "type": "boolean"
+        },
+        "parallel": {
+          "default": false,
+          "title": "Parallel",
+          "type": "boolean"
+        },
+        "dedupe_shapes": {
+          "default": false,
+          "title": "Dedupe Shapes",
+          "type": "boolean"
+        },
+        "angle_tol_deg": {
+          "default": 2.0,
+          "title": "Angle Tol Deg",
+          "type": "number"
+        },
+        "radius_tol_mm": {
+          "default": 0.05,
+          "title": "Radius Tol Mm",
+          "type": "number"
+        }
+      },
+      "title": "SnapSettings",
+      "type": "object"
+    },
+    "TraceSettings": {
+      "properties": {
+        "engine": {
+          "default": "contour",
+          "enum": [
+            "contour",
+            "potrace",
+            "vtracer",
+            "centerline"
+          ],
+          "title": "Engine",
+          "type": "string"
+        },
+        "mode": {
+          "default": "outline",
+          "enum": [
+            "outline",
+            "centerline",
+            "hybrid"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "detail": {
+          "default": 0.5,
+          "title": "Detail",
+          "type": "number"
+        },
+        "threshold": {
+          "default": 128,
+          "title": "Threshold",
+          "type": "integer"
+        },
+        "despeckle_mm2": {
+          "default": 0.02,
+          "title": "Despeckle Mm2",
+          "type": "number"
+        },
+        "corner_sharpness": {
+          "default": 0.6,
+          "title": "Corner Sharpness",
+          "type": "number"
+        },
+        "min_feature_mm": {
+          "default": 0.1,
+          "title": "Min Feature Mm",
+          "type": "number"
+        },
+        "smoothness": {
+          "default": 0.5,
+          "title": "Smoothness",
+          "type": "number"
+        },
+        "curve_tol_mm": {
+          "default": 0.03,
+          "title": "Curve Tol Mm",
+          "type": "number"
+        },
+        "gap_close_mm": {
+          "default": 0.05,
+          "title": "Gap Close Mm",
+          "type": "number"
+        },
+        "node_budget": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Node Budget"
+        },
+        "union_fills": {
+          "default": true,
+          "title": "Union Fills",
+          "type": "boolean"
+        },
+        "preserve_holes": {
+          "default": true,
+          "title": "Preserve Holes",
+          "type": "boolean"
+        },
+        "centerline_max_width_mm": {
+          "default": 0.6,
+          "title": "Centerline Max Width Mm",
+          "type": "number"
+        },
+        "snap": {
+          "$ref": "#/$defs/SnapSettings"
+        },
+        "cut_outer": {
+          "default": false,
+          "title": "Cut Outer",
+          "type": "boolean"
+        }
+      },
+      "title": "TraceSettings",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "display_name": {
+      "title": "Display Name",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "title": "Description",
+      "type": "string"
+    },
+    "stack": {
+      "$ref": "#/$defs/PreprocessStack"
+    },
+    "trace": {
+      "$ref": "#/$defs/TraceSettings"
+    },
+    "export": {
+      "$ref": "#/$defs/ExportProfile"
+    },
+    "tags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+    }
+  },
+  "required": [
+    "name",
+    "display_name"
+  ],
+  "title": "Preset",
+  "type": "object"
+}

@@ -1,0 +1,4 @@
+This directory (sidecars/potrace_sidecar) is licensed under the GNU General Public License v3.0.
+Full text: https://www.gnu.org/licenses/gpl-3.0.txt
+
+It depends on potracer (GPL) and is executed only as a separate process by the MIT-licensed LaserTrace core.

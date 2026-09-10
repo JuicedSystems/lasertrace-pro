@@ -1,0 +1,10 @@
+numpy>=1.26
+opencv-python-headless>=4.9
+scikit-image>=0.22
+scipy>=1.11
+shapely>=2.0
+Pillow>=10
+ezdxf>=1.1
+pydantic>=2.5
+pypdfium2>=4.25
+pytest>=7

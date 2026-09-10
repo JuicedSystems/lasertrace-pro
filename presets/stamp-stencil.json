@@ -1,0 +1,24 @@
+{
+  "name": "stamp-stencil",
+  "display_name": "Deep Stamp / Stencil",
+  "description": "Bold, closed, slightly dilated shapes with no hairlines; tiny holes filled.",
+  "tags": ["stamp", "stencil", "bold"],
+  "stack": {
+    "ops": [
+      {"op": "background_white", "enabled": true, "params": {"tolerance": 40}},
+      {"op": "threshold", "enabled": true, "params": {"method": "otsu", "bias": 10}},
+      {"op": "morph_close", "enabled": true, "params": {"radius_mm": 0.06}},
+      {"op": "dilate", "enabled": true, "params": {"radius_mm": 0.05}},
+      {"op": "despeckle", "enabled": true, "params": {"min_area_mm2": 0.1}},
+      {"op": "fill_holes", "enabled": true, "params": {"max_area_mm2": 0.05}}
+    ]
+  },
+  "trace": {
+    "engine": "contour", "mode": "outline",
+    "detail": 0.35, "threshold": 138, "despeckle_mm2": 0.1, "corner_sharpness": 0.7,
+    "min_feature_mm": 0.3, "smoothness": 0.4,
+    "curve_tol_mm": 0.05, "gap_close_mm": 0.1, "node_budget": null,
+    "union_fills": true, "preserve_holes": true
+  },
+  "export": {"format": "dxf", "dxf_version": "R2000", "width_mm": 50.0, "origin": "bottom_left", "curves": "polyline", "flatten_tol_mm": 0.03, "precision": 3, "close_fills": true}
+}

@@ -1,0 +1,30 @@
+{
+  "name": "depth-photo-relief",
+  "display_name": "Depth from Photo (bas-relief)",
+  "description": "Photo -> plausible bas-relief: luminance gradients compressed and re-integrated, heavier smoothing, 16 slices, 0.3 mm on brass.",
+  "tags": ["depth", "3d", "photo", "relief"],
+  "stack": {
+    "ops": [
+      {"op": "denoise", "enabled": true, "params": {"strength": 6}},
+      {"op": "bilateral", "enabled": true, "params": {"d": 7, "sigma_color": 40, "sigma_space": 5}}
+    ]
+  },
+  "trace": {
+    "engine": "contour", "mode": "outline",
+    "detail": 0.4, "threshold": 128, "despeckle_mm2": 0.0, "corner_sharpness": 0.3,
+    "min_feature_mm": 0.15, "smoothness": 0.7,
+    "curve_tol_mm": 0.04, "gap_close_mm": 0.05, "node_budget": null,
+    "union_fills": true, "preserve_holes": true
+  },
+  "depth": {
+    "enabled": true, "levels": 16, "dark_is_deep": true, "total_depth_mm": 0.3,
+    "material": "brass", "laser_w": 60.0, "z_step": true, "z_step_every_mm": 0.1,
+    "normalize": true, "depth_gamma": 1.0, "equalize": 0.3,
+    "smoothing_mm": 0.12, "edge_preserve": true, "zero_plane": "border", "floor": 0.03,
+    "photo_to_relief": true, "relief_strength": 0.6, "feather_mm": 0.1,
+    "min_island_mm2": 0.04, "draft_angle_deg": 8.0,
+    "quantize_png": false, "png_bits": 8, "png_black_is_deep": true,
+    "hatch": {"enabled": false, "spacing_mm": 0.025, "angle_start_deg": 0.0, "angle_step_deg": 37.0, "bidirectional": true, "contour_pass": true}
+  },
+  "export": {"format": "dxf", "dxf_version": "R2000", "width_mm": 50.0, "origin": "bottom_left", "curves": "polyline", "flatten_tol_mm": 0.02, "precision": 3, "close_fills": true}
+}

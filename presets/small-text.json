@@ -1,0 +1,23 @@
+{
+  "name": "small-text",
+  "display_name": "Small Text",
+  "description": "Protect counters and serifs: hysteresis threshold, minimal smoothing, tiny holes kept.",
+  "tags": ["text", "detail"],
+  "stack": {
+    "ops": [
+      {"op": "background_white", "enabled": true, "params": {"tolerance": 30}},
+      {"op": "upscale", "enabled": true, "params": {"factor": 2.0, "method": "lanczos"}},
+      {"op": "unsharp", "enabled": true, "params": {"amount": 0.5, "radius": 1.0}},
+      {"op": "threshold", "enabled": true, "params": {"method": "hysteresis", "low": 120, "high": 175}},
+      {"op": "despeckle", "enabled": true, "params": {"min_area_mm2": 0.005}}
+    ]
+  },
+  "trace": {
+    "engine": "contour", "mode": "outline",
+    "detail": 0.85, "threshold": 128, "despeckle_mm2": 0.005, "corner_sharpness": 0.85,
+    "min_feature_mm": 0.05, "smoothness": 0.3,
+    "curve_tol_mm": 0.015, "gap_close_mm": 0.03, "node_budget": null,
+    "union_fills": true, "preserve_holes": true
+  },
+  "export": {"format": "dxf", "dxf_version": "R2000", "width_mm": 50.0, "origin": "bottom_left", "curves": "polyline", "flatten_tol_mm": 0.01, "precision": 4, "close_fills": true}
+}

@@ -1,0 +1,175 @@
+{
+  "logo_geometric_sharp.png": {
+    "preset": "logo-fill",
+    "target_nodes": 60,
+    "holes": 3
+  },
+  "logo_geometric_aa.png": {
+    "preset": "logo-fill",
+    "target_nodes": 60,
+    "holes": 3
+  },
+  "logo_geometric_jpeg.jpg": {
+    "preset": "logo-fill",
+    "target_nodes": 70,
+    "holes": 3
+  },
+  "logo_geometric_noisy.png": {
+    "preset": "logo-fill",
+    "target_nodes": 70,
+    "holes": 3
+  },
+  "circle_sharp.png": {
+    "preset": "logo-fill",
+    "target_nodes": 12,
+    "holes": 0
+  },
+  "rounded_rect.png": {
+    "preset": "logo-fill",
+    "target_nodes": 16,
+    "holes": 0
+  },
+  "ring.png": {
+    "preset": "logo-fill",
+    "target_nodes": 24,
+    "holes": 1
+  },
+  "text_bold_counters.png": {
+    "preset": "small-text",
+    "target_nodes": 260,
+    "holes": 9
+  },
+  "text_bold_counters_1bit.png": {
+    "preset": "small-text",
+    "target_nodes": 260,
+    "holes": 9
+  },
+  "text_small_serial.png": {
+    "preset": "small-text",
+    "target_nodes": 900,
+    "holes": 14
+  },
+  "text_serif.png": {
+    "preset": "small-text",
+    "target_nodes": 300,
+    "holes": 5
+  },
+  "text_script_thin.png": {
+    "preset": "thin-line-art",
+    "target_nodes": 400
+  },
+  "stencil_text.png": {
+    "preset": "stamp-stencil",
+    "target_nodes": 200,
+    "holes": 4
+  },
+  "qr_25_clean.png": {
+    "preset": "qr-datamatrix",
+    "target_nodes": 2200
+  },
+  "qr_21_small.png": {
+    "preset": "qr-datamatrix",
+    "target_nodes": 1600
+  },
+  "qr_25_jpeg.jpg": {
+    "preset": "qr-datamatrix",
+    "target_nodes": 2400
+  },
+  "lineart_thin_3px.png": {
+    "preset": "thin-line-art",
+    "target_nodes": 120
+  },
+  "lineart_medium_7px.png": {
+    "preset": "thin-line-art",
+    "target_nodes": 120
+  },
+  "lineart_broken.png": {
+    "preset": "thin-line-art",
+    "target_nodes": 140
+  },
+  "double_outline_clipart.png": {
+    "preset": "logo-fill",
+    "target_nodes": 60,
+    "holes": 4
+  },
+  "photo_sign_skewed.jpg": {
+    "preset": "dirty-phone-photo",
+    "target_nodes": 900
+  },
+  "sketch_pencil.png": {
+    "preset": "thin-line-art",
+    "target_nodes": 200
+  },
+  "scan_soft_text.png": {
+    "preset": "logo-fill",
+    "target_nodes": 120,
+    "holes": 1
+  },
+  "photo_logo_dirty.jpg": {
+    "preset": "dirty-phone-photo",
+    "target_nodes": 200,
+    "holes": 3
+  },
+  "tiny_logo_64px.png": {
+    "preset": "tiny-logo",
+    "target_nodes": 80
+  },
+  "favicon_48px.png": {
+    "preset": "tiny-logo",
+    "target_nodes": 60
+  },
+  "color_logo.png": {
+    "preset": "logo-fill",
+    "target_nodes": 120
+  },
+  "screenshot_email.png": {
+    "preset": "logo-fill",
+    "target_nodes": 300
+  },
+  "logo_gray_halo.png": {
+    "preset": "logo-fill",
+    "target_nodes": 70,
+    "holes": 3
+  },
+  "logo_inverted_white_on_black.png": {
+    "preset": "logo-fill",
+    "target_nodes": 70
+  },
+  "logo_gradient_fill.png": {
+    "preset": "logo-fill",
+    "target_nodes": 70,
+    "holes": 3
+  },
+  "hairlines_1_to_6px.png": {
+    "preset": "thin-line-art",
+    "target_nodes": 24
+  },
+  "overlapping_shapes_union.png": {
+    "preset": "logo-fill",
+    "target_nodes": 40,
+    "holes": 0
+  },
+  "hybrid_fill_plus_lines.png": {
+    "preset": "logo-fill",
+    "target_nodes": 60
+  },
+  "multitone_logo.png": {
+    "preset": "logo-fill",
+    "target_nodes": 40
+  },
+  "relief_dome_pyramid.png": {
+    "preset": "depth-relief",
+    "target_nodes": 900,
+    "depth": true
+  },
+  "relief_coin.png": {
+    "preset": "depth-coin",
+    "target_nodes": 1500,
+    "depth": true
+  },
+  "relief_photo_like.png": {
+    "preset": "depth-photo-relief",
+    "target_nodes": 1400,
+    "depth": true
+  }
+}

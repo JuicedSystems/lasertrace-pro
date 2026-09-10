@@ -1,0 +1,26 @@
+{
+  "name": "photo-to-plate",
+  "display_name": "Photo to Plate",
+  "description": "Aggressive binary + denoise for a readable silhouette on a nameplate; not photoreal.",
+  "tags": ["photo", "silhouette"],
+  "stack": {
+    "ops": [
+      {"op": "denoise", "enabled": true, "params": {"strength": 12}},
+      {"op": "bilateral", "enabled": true, "params": {"d": 9, "sigma_color": 60, "sigma_space": 6}},
+      {"op": "levels", "enabled": true, "params": {"black": 30, "white": 225, "gamma": 1.0}},
+      {"op": "threshold", "enabled": true, "params": {"method": "otsu", "bias": 0}},
+      {"op": "morph_open", "enabled": true, "params": {"radius_mm": 0.05}},
+      {"op": "morph_close", "enabled": true, "params": {"radius_mm": 0.08}},
+      {"op": "despeckle", "enabled": true, "params": {"min_area_mm2": 0.3}},
+      {"op": "fill_holes", "enabled": true, "params": {"max_area_mm2": 0.2}}
+    ]
+  },
+  "trace": {
+    "engine": "contour", "mode": "outline",
+    "detail": 0.3, "threshold": 128, "despeckle_mm2": 0.3, "corner_sharpness": 0.3,
+    "min_feature_mm": 0.35, "smoothness": 0.7,
+    "curve_tol_mm": 0.08, "gap_close_mm": 0.1, "node_budget": 1500,
+    "union_fills": true, "preserve_holes": true
+  },
+  "export": {"format": "dxf", "dxf_version": "R2000", "width_mm": 50.0, "origin": "bottom_left", "curves": "polyline", "flatten_tol_mm": 0.03, "precision": 3, "close_fills": true}
+}

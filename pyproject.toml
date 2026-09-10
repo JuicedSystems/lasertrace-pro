@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lasertrace"
+version = "0.1.0"
+description = "Laser-first black-and-white image vectorizer for fiber laser shops (EZCAD / LightBurn)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Juiced Systems" }]
+keywords = ["laser", "engraving", "vectorizer", "dxf", "ezcad", "lightburn", "fiber-laser", "centerline"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: X11 Applications :: Qt",
+  "Intended Audience :: Manufacturing",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+  "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = [
+  "numpy>=1.26",
+  "opencv-python-headless>=4.9",
+  "scikit-image>=0.22",
+  "scipy>=1.11",
+  "shapely>=2.0",
+  "Pillow>=10",
+  "ezdxf>=1.1",
+  "pydantic>=2.5",
+  "pypdfium2>=4.25",
+]
+
+[project.urls]
+Homepage = "https://github.com/JuicedSystems/lasertrace-pro"
+Repository = "https://github.com/JuicedSystems/lasertrace-pro"
+Issues = "https://github.com/JuicedSystems/lasertrace-pro/issues"
+
+[project.optional-dependencies]
+ui = ["PySide6>=6.6"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+lasertrace = "lasertrace.cli:main"
+lasertrace-ui = "lasertrace_ui.main:main"
+
+[tool.setuptools.packages.find]
+include = ["lasertrace*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,23 @@
+{
+  "name": "cut-outer-engrave-inner",
+  "display_name": "Cut Outer + Engrave Inner",
+  "description": "Silhouette of the artwork on the CUT layer (red hairline), interior detail on ENGRAVE.",
+  "tags": ["cut", "engrave", "tag", "keychain"],
+  "stack": {
+    "ops": [
+      {"op": "background_white", "enabled": true, "params": {"tolerance": 30}},
+      {"op": "threshold", "enabled": true, "params": {"method": "otsu", "bias": 0}},
+      {"op": "knockout_halo", "enabled": true, "params": {"band_px": 2, "halo_max_gray": 200}},
+      {"op": "despeckle", "enabled": true, "params": {"min_area_mm2": 0.05}},
+      {"op": "fill_holes", "enabled": true, "params": {"max_area_mm2": 0.01}}
+    ]
+  },
+  "trace": {
+    "engine": "contour", "mode": "outline",
+    "detail": 0.5, "threshold": 128, "despeckle_mm2": 0.05, "corner_sharpness": 0.6,
+    "min_feature_mm": 0.15, "smoothness": 0.5,
+    "curve_tol_mm": 0.03, "gap_close_mm": 0.05, "node_budget": null,
+    "union_fills": true, "preserve_holes": true, "cut_outer": true
+  },
+  "export": {"format": "dxf", "dxf_version": "R2000", "width_mm": 50.0, "origin": "bottom_left", "curves": "polyline", "flatten_tol_mm": 0.02, "precision": 3, "close_fills": true, "cut_hairline_mm": 0.01}
+}
