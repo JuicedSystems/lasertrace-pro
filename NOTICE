@@ -1,0 +1,31 @@
+LaserTrace Pro
+Copyright (c) 2026 Juiced Systems
+
+This product is licensed under the MIT License (see LICENSE).
+
+Third-party components with different terms
+-------------------------------------------
+
+sidecars/potrace_sidecar/
+    Potrace is licensed under the GNU General Public License v3. It is
+    therefore NEVER imported into this codebase: the sidecar is a standalone
+    script executed as a separate process over a pipe, and every feature of
+    LaserTrace Pro works without it (the trace falls back to the built-in
+    contour engine, with an ENGINE_FALLBACK warning). Its own licence text is
+    in sidecars/potrace_sidecar/LICENSE.
+
+PyMuPDF
+    Not used. It is AGPL, which would be viral across this codebase. PDF input
+    goes through pypdfium2 (Apache-2.0 / BSD-3-Clause) instead.
+
+Runtime dependencies
+    numpy (BSD-3-Clause), OpenCV (Apache-2.0), scikit-image (BSD-3-Clause),
+    SciPy (BSD-3-Clause), Shapely (BSD-3-Clause), Pillow (MIT-CMU),
+    ezdxf (MIT), pydantic (MIT), pypdfium2 (Apache-2.0 / BSD-3-Clause).
+
+    The desktop shell additionally uses PySide6, which is LGPL-3 / GPL. It is
+    used as an unmodified shared library, so distributing the app under the
+    LGPL terms is straightforward; the `lasertrace` core and CLI have no Qt
+    dependency at all if you would rather avoid it entirely.
+
+See docs/TECH_STACK.md for the full audit.

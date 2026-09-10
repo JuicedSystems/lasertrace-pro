@@ -134,8 +134,8 @@ Two deliberate constraints keep it that way:
   process and is never imported into the core. Everything works without it.
 - PyMuPDF (AGPL) is not used anywhere; PDF input goes through pypdfium2.
 
-See [docs/TECH_STACK.md](docs/TECH_STACK.md) for the full dependency licence
-audit.
+See [NOTICE](NOTICE) for third-party terms and
+[docs/TECH_STACK.md](docs/TECH_STACK.md) for the full dependency licence audit.
 
 ## Contributing
 
