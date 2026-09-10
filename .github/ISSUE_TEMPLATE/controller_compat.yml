@@ -1,0 +1,53 @@
+name: Controller compatibility
+description: An export that a controller rejected, mangled or marked wrong
+labels: ["compatibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        EZCAD imports were verified against the format spec and reference files
+        rather than on a live machine, so reports from real controllers are
+        exactly what this project needs.
+  - type: dropdown
+    id: controller
+    attributes:
+      label: Controller
+      options: ["EZCAD2", "EZCAD3", "LightBurn (galvo)", "LightBurn (gantry)", "Other"]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: "EZCAD 2.14.16"
+  - type: dropdown
+    id: symptom
+    attributes:
+      label: Symptom
+      options:
+        - Import failed or file rejected
+        - Wrong size / scale / units
+        - Fill leaked out of an outline
+        - Layers missing or merged
+        - Geometry distorted (curves, arcs, splines)
+        - Marked twice / dark seam on overlaps
+        - Depth slices out of register
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: settings
+    attributes:
+      label: Export settings
+      placeholder: "DXF R2000, polyline curves, bottom_left origin, 38 mm wide, flatten off"
+  - type: textarea
+    id: files
+    attributes:
+      label: Files
+      description: The exported file, and a photo of the part if the mark itself was wrong.

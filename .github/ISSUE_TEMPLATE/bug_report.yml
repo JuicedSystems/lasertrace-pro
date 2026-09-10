@@ -1,0 +1,70 @@
+name: Bug report
+description: Something traced, exported or marked wrong
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The most useful reports are the ones that name what the **machine** did.
+        Every export embeds the job settings that made it, so attaching the file
+        lets us reproduce your exact run.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you expect on the part, and what did you get?
+      placeholder: |
+        Expected: the counters in the "8" to stay open.
+        Got: solid blobs at 3 mm cap height.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      placeholder: |
+        1. Paste the attached logo.png
+        2. Preset AUTO, width 38 mm
+        3. Export DXF
+    validations:
+      required: true
+  - type: input
+    id: preset
+    attributes:
+      label: Preset / AUTO mode and width
+      placeholder: "auto-depth, 40 mm"
+  - type: dropdown
+    id: controller
+    attributes:
+      label: Where did it go wrong?
+      options:
+        - In LaserTrace Pro (trace/preview)
+        - EZCAD2
+        - EZCAD3
+        - LightBurn
+        - Another program
+        - On the part itself
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Files
+      description: |
+        Drag in the source image and the exported file if you can. For a depth job,
+        `<stem>_plan.json` from the pack carries the settings, report and warnings.
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      placeholder: |
+        OS: Windows 11
+        Python: 3.11.9
+        LaserTrace Pro: commit or version
+        Controller: EZCAD 2.14.16 / LightBurn 1.7
+  - type: textarea
+    id: warnings
+    attributes:
+      label: Stats and warnings panel
+      description: Copy the text from the Stats and Warnings boxes (they select with the mouse).
+      render: text

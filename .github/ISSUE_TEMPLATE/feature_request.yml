@@ -1,0 +1,34 @@
+name: Feature request
+description: Suggest a capability or a preset
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: job
+    attributes:
+      label: What job are you trying to do?
+      description: Describe the shop problem, not just the feature. It usually suggests a better fix than the one we'd have guessed.
+      placeholder: "I mark anodised nameplates where the artwork always arrives as a screenshot of a PDF..."
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: What do you do today?
+      placeholder: "Trace in Illustrator, clean up by hand, re-import. About 20 minutes per part."
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Tracing / geometry
+        - Preprocessing
+        - Depth (3D relief) engraving
+        - Export / controller compatibility
+        - Desktop UI
+        - CLI / batch
+        - Presets
+        - Documentation or in-app help

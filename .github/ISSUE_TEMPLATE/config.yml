@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How does this control work?
+    url: https://github.com/JuicedSystems/lasertrace-pro#help-lives-in-the-app
+    about: Press F1 in the app for a searchable handbook covering every control, warning and workflow.
+  - name: Depth engraving guide
+    url: https://github.com/JuicedSystems/lasertrace-pro/blob/main/docs/DEPTH_ENGRAVING.md
+    about: The physics, the measured removal rates, and the LightBurn / EZCAD2 / EZCAD3 setup steps.
+  - name: Security vulnerability
+    url: https://github.com/JuicedSystems/lasertrace-pro/security/advisories/new
+    about: Please report privately rather than in a public issue.
