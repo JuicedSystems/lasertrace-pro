@@ -11,6 +11,7 @@ EZCAD2/3, JCZ galvo controllers, LightBurn. Not a drawing program, not a
 general-purpose tracer: every default exists because of something that goes
 wrong on the machine.
 
+[![CI](https://github.com/JuicedSystems/lasertrace-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/JuicedSystems/lasertrace-pro/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776ab.svg)](https://www.python.org/)
 [![PySide6](https://img.shields.io/badge/GUI-PySide6-41cd52.svg)](https://doc.qt.io/qtforpython/)
@@ -136,6 +137,15 @@ committed:
 
 ```bash
 pytest            # 118 tests, ~2 minutes
+```
+
+Every push runs that suite on **Linux, macOS and Windows × Python 3.11 and
+3.12**, then builds a wheel, installs it into a clean virtualenv and runs it
+from outside the source tree — because an editable install will happily hide a
+packaging bug that breaks everyone else. You can run that last check yourself:
+
+```bash
+cd /tmp && python /path/to/repo/tools/verify_install.py
 ```
 
 Use `requirements.txt` instead for the headless core. Both files just install
