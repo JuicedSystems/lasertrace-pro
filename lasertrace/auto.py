@@ -225,9 +225,29 @@ def analyze_depth(rgb: np.ndarray) -> DepthAnalysis:
     return DepthAnalysis(surface_is_light, mid, distinct, texture, edge_density, looks_like_photo, looks_like_heightmap, footprint)
 
 
+_ALPHA_NOTES = {
+    "alpha_ink": "transparent background, one-colour art -> shape taken from transparency",
+    "light_inverted": "light art with no dark detail on a transparent background -> inverted so the art is the ink",
+}
+
+
+def _source_notes(source: SourceImage | None) -> list[str]:
+    """What ingest decided about the file itself, so the operator sees it too."""
+    if source is None:
+        return []
+    notes = []
+    if source.bit_depth >= 16:
+        # ingest scales every high-bit image from a fixed range (see ingest._high_bit_to_l)
+        full = "0..1" if source.mode == "F" else "0..65535"
+        notes.append(f"{source.bit_depth}-bit source -> {full} scaled to 8-bit")
+    if source.alpha_policy in _ALPHA_NOTES:
+        notes.append(_ALPHA_NOTES[source.alpha_policy])
+    return notes
+
+
 def _build_depth_job(rgb: np.ndarray, width_mm: float | None, source: SourceImage | None) -> Job:
     d = analyze_depth(rgb)
-    notes: list[str] = []
+    notes: list[str] = _source_notes(source)
     base = "depth-photo-relief" if d.looks_like_photo else "depth-relief"
     job = Job.from_preset(load_preset(base), source)
     job.preset_name = "auto-depth"
@@ -269,7 +289,7 @@ def build_job(rgb: np.ndarray, mode: str = "auto", width_mm: float | None = None
     if mode == "auto-depth":
         return _build_depth_job(rgb, width_mm, source)
     a = analyze(rgb, width_mm)
-    notes: list[str] = []
+    notes: list[str] = _source_notes(source)
 
     if mode == "auto":
         base = a.classification.suggested_preset

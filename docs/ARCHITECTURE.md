@@ -28,7 +28,7 @@
 |---|---|
 | `models.py` | Pydantic models: `SourceImage`, `PreprocessOp/Stack`, `TraceSettings`, `Line/Cubic/Arc/Subpath/Path/PathGraph`, `Stats`, `Warning`, `TraceResult`, `ExportProfile`, `Preset`, `Job`. |
 | `units.py` | `Transform` (affine), px<->mm helpers. |
-| `ingest.py` | File/bytes/clipboard/PDF page 1 -> RGB uint8 + `SourceImage` (EXIF applied, alpha flattened onto white). |
+| `ingest.py` | File/bytes/clipboard/PDF page 1 -> RGB uint8 + `SourceImage` (EXIF applied; 16/32-bit images scaled to 8-bit from one fixed range per mode - integers 0..65535, floats 0..1 - never from the image's own values; transparency flattened so the art is dark ink - one-colour art on a transparent background uses alpha as the ink, light flat-colour art with no dark detail is inverted, everything else (dark outlines or text, photos) composites on white; `bit_depth` and `alpha_policy` record what happened). |
 | `preprocess/threshold.py` | manual, Otsu(+bias), adaptive, Sauvola, Niblack, hysteresis. Local methods carry a global Otsu guard so large flat regions do not fragment. |
 | `preprocess/morphology.py` | open/close/dilate/erode (px or mm), despeckle by area, hole fill by area, halo knockout, hole/component counting, stroke-width stats. |
 | `preprocess/enhance.py` | crop/rotate/deskew, background flatten, upscale, denoise, bilateral, unsharp, levels/gamma, quantize. |
