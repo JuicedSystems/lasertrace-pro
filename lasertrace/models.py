@@ -81,6 +81,11 @@ class SourceImage(BaseModel):
     mode: str = "RGB"
     exif_orientation: int = 1
     origin: Literal["file", "clipboard", "bytes"] = "file"
+    bit_depth: int = 8                      # bits per channel in the file (16 = 16-bit grayscale)
+    # how transparency was flattened: none (opaque), on_white (composited on white),
+    # alpha_ink (one-colour art: shape taken from alpha),
+    # light_inverted (light flat-colour art with no dark detail -> inverted to dark ink)
+    alpha_policy: Literal["none", "on_white", "alpha_ink", "light_inverted"] = "none"
 
     @property
     def est_width_mm(self) -> Optional[float]:

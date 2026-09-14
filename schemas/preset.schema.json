@@ -1,5 +1,215 @@
 {
   "$defs": {
+    "DepthHatchSettings": {
+      "description": "Optional in-app hatch generation per slice (for controllers that cannot\nrotate the hatch angle per pass themselves, or to lock the fill pattern).",
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "spacing_mm": {
+          "default": 0.025,
+          "title": "Spacing Mm",
+          "type": "number"
+        },
+        "angle_start_deg": {
+          "default": 0.0,
+          "title": "Angle Start Deg",
+          "type": "number"
+        },
+        "angle_step_deg": {
+          "default": 37.0,
+          "title": "Angle Step Deg",
+          "type": "number"
+        },
+        "bidirectional": {
+          "default": true,
+          "title": "Bidirectional",
+          "type": "boolean"
+        },
+        "contour_pass": {
+          "default": true,
+          "title": "Contour Pass",
+          "type": "boolean"
+        },
+        "max_lines": {
+          "default": 250000,
+          "title": "Max Lines",
+          "type": "integer"
+        }
+      },
+      "title": "DepthHatchSettings",
+      "type": "object"
+    },
+    "DepthSettings": {
+      "description": "Grayscale height map -> N cumulative slices.\n\nHeight convention inside the pipeline: 0.0 = untouched surface,\n1.0 = full `total_depth_mm`. Slice i (1..levels) is the region deeper than\n(i - 0.5) / levels, so a pixel's pass count rounds its height and the\ndeepest pixels are engraved in every pass (that is what removes material\ncorrectly: each pass takes roughly the same thickness off wherever it hits).",
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "levels": {
+          "default": 16,
+          "title": "Levels",
+          "type": "integer"
+        },
+        "dark_is_deep": {
+          "default": true,
+          "title": "Dark Is Deep",
+          "type": "boolean"
+        },
+        "total_depth_mm": {
+          "default": 0.5,
+          "title": "Total Depth Mm",
+          "type": "number"
+        },
+        "material": {
+          "default": "stainless",
+          "title": "Material",
+          "type": "string"
+        },
+        "laser_w": {
+          "default": 50.0,
+          "title": "Laser W",
+          "type": "number"
+        },
+        "removal_per_pass_um": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Removal Per Pass Um"
+        },
+        "passes_per_slice": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Passes Per Slice"
+        },
+        "z_step": {
+          "default": true,
+          "title": "Z Step",
+          "type": "boolean"
+        },
+        "z_step_every_mm": {
+          "default": 0.1,
+          "title": "Z Step Every Mm",
+          "type": "number"
+        },
+        "normalize": {
+          "default": true,
+          "title": "Normalize",
+          "type": "boolean"
+        },
+        "black_point": {
+          "default": 0,
+          "title": "Black Point",
+          "type": "integer"
+        },
+        "white_point": {
+          "default": 255,
+          "title": "White Point",
+          "type": "integer"
+        },
+        "depth_gamma": {
+          "default": 1.0,
+          "title": "Depth Gamma",
+          "type": "number"
+        },
+        "equalize": {
+          "default": 0.0,
+          "title": "Equalize",
+          "type": "number"
+        },
+        "smoothing_mm": {
+          "default": 0.05,
+          "title": "Smoothing Mm",
+          "type": "number"
+        },
+        "edge_preserve": {
+          "default": true,
+          "title": "Edge Preserve",
+          "type": "boolean"
+        },
+        "zero_plane": {
+          "default": "border",
+          "enum": [
+            "none",
+            "border",
+            "min"
+          ],
+          "title": "Zero Plane",
+          "type": "string"
+        },
+        "floor": {
+          "default": 0.02,
+          "title": "Floor",
+          "type": "number"
+        },
+        "photo_to_relief": {
+          "default": false,
+          "title": "Photo To Relief",
+          "type": "boolean"
+        },
+        "relief_strength": {
+          "default": 0.6,
+          "title": "Relief Strength",
+          "type": "number"
+        },
+        "feather_mm": {
+          "default": 0.0,
+          "title": "Feather Mm",
+          "type": "number"
+        },
+        "min_island_mm2": {
+          "default": 0.01,
+          "title": "Min Island Mm2",
+          "type": "number"
+        },
+        "draft_angle_deg": {
+          "default": 8.0,
+          "title": "Draft Angle Deg",
+          "type": "number"
+        },
+        "quantize_png": {
+          "default": false,
+          "title": "Quantize Png",
+          "type": "boolean"
+        },
+        "png_bits": {
+          "default": 8,
+          "enum": [
+            8,
+            16
+          ],
+          "title": "Png Bits",
+          "type": "integer"
+        },
+        "png_black_is_deep": {
+          "default": true,
+          "title": "Png Black Is Deep",
+          "type": "boolean"
+        },
+        "hatch": {
+          "$ref": "#/$defs/DepthHatchSettings"
+        }
+      },
+      "title": "DepthSettings",
+      "type": "object"
+    },
     "ExportProfile": {
       "properties": {
         "format": {
@@ -361,6 +571,9 @@
     },
     "export": {
       "$ref": "#/$defs/ExportProfile"
+    },
+    "depth": {
+      "$ref": "#/$defs/DepthSettings"
     },
     "tags": {
       "items": {

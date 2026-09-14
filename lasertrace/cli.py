@@ -17,7 +17,7 @@ from pathlib import Path
 
 from . import __version__
 from .export import export
-from .ingest import SUPPORTED_EXT, load_file
+from .ingest import load_file, supported_ext
 from .models import Job
 from .pipeline import run
 from .preprocess.classify import classify
@@ -199,7 +199,8 @@ def main(argv: list[str] | None = None) -> int:
         out_dir = Path(a.out_dir or (in_dir / "vectors"))
         out_dir.mkdir(parents=True, exist_ok=True)
         fmts = [f.strip().lstrip(".") for f in a.format.split(",") if f.strip()]
-        files = sorted(f for f in in_dir.iterdir() if f.suffix.lower() in SUPPORTED_EXT)
+        exts = supported_ext()
+        files = sorted(f for f in in_dir.iterdir() if f.suffix.lower() in exts)
         rows = []
         for f in files:
             outs = [out_dir / f"{f.stem}.{fmt}" for fmt in fmts]
