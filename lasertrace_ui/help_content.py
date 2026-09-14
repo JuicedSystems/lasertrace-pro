@@ -1084,7 +1084,7 @@ alongside the source image and you can reproduce it exactly.
 """
 
 _ABOUT = """
-**LaserTrace Pro 0.1.0** - a laser-first black and white vectorizer.
+**LaserTrace Pro 0.1.1** - a laser-first black and white vectorizer.
 
 Built for a fiber laser shop: EZCAD2 / EZCAD3 DXF in millimetres as the primary
 output, LightBurn SVG as the secondary one.

@@ -95,6 +95,8 @@ Standalone builds are on the
 | `LaserTracePro-windows-x64.zip` | Windows 10/11 (64-bit) — unzip anywhere, run `LaserTracePro.exe` |
 | `LaserTracePro-macos-arm64.zip` | macOS on Apple Silicon (M1 and later) |
 
+What changed in each version is in [CHANGELOG.md](CHANGELOG.md).
+
 **Intel Macs:** there is no app build — GitHub's Intel macOS runner image is
 retired, and an Apple Silicon build cannot run on Intel (Rosetta only translates
 x86 → ARM, not the reverse). [Install with pip](#install-with-pip) instead; it

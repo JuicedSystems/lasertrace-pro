@@ -112,8 +112,8 @@ if sys.platform == "darwin":
         icon=ICON,
         bundle_identifier="com.juicedsystems.lasertracepro",
         info_plist={
-            "CFBundleShortVersionString": "0.1.0",
-            "CFBundleVersion": "0.1.0",
+            "CFBundleShortVersionString": "0.1.1",
+            "CFBundleVersion": "0.1.1",
             "NSHighResolutionCapable": True,
             "LSMinimumSystemVersion": "11.0",
             "NSHumanReadableCopyright": "Copyright (c) 2026 Juiced Systems. MIT licensed.",
