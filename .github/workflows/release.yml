@@ -137,12 +137,35 @@ jobs:
             done
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
+      - name: What changed
+        id: notes
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          # the CHANGELOG.md section for this version, without its heading
+          ver="${TAG#v}"
+          notes=$(awk -v head="## [$ver]" '
+            /^## \[/ { if (on) exit; on = (index($0, head) == 1); next }
+            on' CHANGELOG.md)
+          if [ -z "$(echo "$notes" | tr -d '[:space:]')" ]; then
+            echo "::warning::CHANGELOG.md has no section for $ver - the release notes only list downloads"
+          fi
+          {
+            echo "notes<<NOTES_EOF"
+            echo "$notes"
+            echo "NOTES_EOF"
+          } >> "$GITHUB_OUTPUT"
       - uses: softprops/action-gh-release@v2
         with:
           draft: true
           files: artifacts/*.zip
           generate_release_notes: true
           body: |
+            ${{ steps.notes.outputs.notes }}
+
+            ### Download
+
             Standalone builds — no Python install required.
 
             | Download | For |

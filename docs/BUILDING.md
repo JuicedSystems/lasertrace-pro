@@ -98,6 +98,25 @@ proper exit code:
 CI runs it before uploading anything, so a broken bundle never reaches a
 release.
 
+## Cutting a release
+
+1. Add a section for the new version to `CHANGELOG.md`, headed
+   `## [0.1.2] - YYYY-MM-DD` and written for the person at the laser. The
+   release job copies it into the release notes.
+2. Bump the version in `pyproject.toml`, `lasertrace/__init__.py`, the About
+   text in `lasertrace_ui/help_content.py` and the macOS Info.plist in
+   `packaging/lasertrace.spec`. `tests/test_version.py` fails if they disagree
+   or the changelog has no section for the version.
+3. Merge to `main`, then tag that commit and push the tag:
+
+   ```bash
+   git tag v0.1.2
+   git push origin v0.1.2
+   ```
+
+4. The release workflow builds and verifies both apps and creates a **draft**
+   release holding the zips and the notes. Read it over, then publish it.
+
 ## Signing
 
 **The published builds are unsigned.** Code-signing needs a paid Apple
