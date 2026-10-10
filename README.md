@@ -1,10 +1,8 @@
 <div align="center">
 
-<img src="lasertrace_ui/assets/icon_128.png" width="104" alt="LaserTrace Pro">
+<img src="docs/banner.svg" width="100%" alt="LaserTrace Pro: Paste a messy logo. Get a DXF that EZCAD fills cleanly.">
 
 # LaserTrace Pro
-
-**Paste a messy logo. Get a DXF that EZCAD fills cleanly.**
 
 A black-and-white image vectorizer built for **fiber laser marking shops** —
 EZCAD2/3, JCZ galvo controllers, LightBurn. Not a drawing program, not a
@@ -14,6 +12,8 @@ wrong on the machine.
 [![CI](https://github.com/JuicedSystems/lasertrace-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/JuicedSystems/lasertrace-pro/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776ab.svg)](https://www.python.org/)
+[![Latest release](https://img.shields.io/github/v/release/JuicedSystems/lasertrace-pro?color=ff8a1f)](https://github.com/JuicedSystems/lasertrace-pro/releases/latest)
+[![Platform: Windows · macOS · Linux](https://img.shields.io/badge/Platform-Windows%20%C2%B7%20macOS%20%C2%B7%20Linux-555.svg)](#install)
 [![PySide6](https://img.shields.io/badge/GUI-PySide6-41cd52.svg)](https://doc.qt.io/qtforpython/)
 [![Output: DXF · SVG · PLT · PDF · PNG](https://img.shields.io/badge/Output-DXF%20%C2%B7%20SVG%20%C2%B7%20PLT%20%C2%B7%20PDF%20%C2%B7%20PNG-ff8a1f.svg)](#exports)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff8a1f.svg)](CONTRIBUTING.md)
@@ -26,19 +26,33 @@ wrong on the machine.
 
 ## Contents
 
+[Quickstart](#quickstart) ·
 [What it's for](#what-its-for) ·
 [Why not Image Trace](#why-not-illustrator-image-trace-or-vector-magic) ·
 [See it](#see-it) ·
+[How it works](#how-it-works) ·
 [Install](#install) ·
 [60-second tour](#60-second-tour) ·
 [Depth engraving](#depth-3d-relief-engraving) ·
 [CLI](#headless-cli) ·
+[Configuration](#configuration) ·
 [Presets](#presets-shop-names) ·
 [Help](#help-lives-in-the-app) ·
 [Testing](#regression-harness) ·
 [Docs](#documentation) ·
 [Roadmap](#status-and-roadmap) ·
 [License](#license)
+
+## Quickstart
+
+```bash
+pip install "lasertrace[ui] @ git+https://github.com/JuicedSystems/lasertrace-pro.git"
+lasertrace logo.png --width-mm 38 --out logo.dxf   # headless: image -> DXF in mm
+lasertrace-ui                                      # or open the desktop app
+```
+
+No Python? Grab the Windows or macOS app from the
+[releases page](https://github.com/JuicedSystems/lasertrace-pro/releases). Details in [Install](#install).
 
 ## What it's for
 
@@ -71,6 +85,12 @@ different things:
 
 ## See it
 
+**Before / after.** These are real runs of the CLI (`lasertrace <fixture> --out x.svg --stats x.json`)
+on images from [`fixtures/`](fixtures), with the SVG output rendered as-is and the
+numbers copied from the stats file:
+
+<img src="docs/assets/before-after.png" alt="Fixture inputs next to the traced vector output, with path, node, hole and fidelity stats">
+
 **Trace view** — vectors over the source, with every node marked. The stats
 panel is the part that matters: 4 paths, 36 nodes, 3 holes kept, 99.4 %
 fidelity, complexity 1/100.
@@ -81,6 +101,28 @@ fidelity, complexity 1/100.
 shaded light-to-dark, with the pass plan and material numbers on the right.
 
 <img src="docs/assets/screenshot-depth.png" alt="Depth engraving view with 30 shaded slices">
+
+## How it works
+
+```mermaid
+flowchart LR
+    A["Paste / open<br/>PNG JPG WEBP TIF PDF SVG"] --> B["Ingest<br/>bit depth, alpha, EXIF"]
+    B --> C["AUTO classify<br/>logo, photo, lines, depth"]
+    C --> D["Preprocess stack<br/>despeckle, halo knockout,<br/>Sauvola threshold, deskew"]
+    D --> E{"Trace engine"}
+    E -->|fills| F["Contour"]
+    E -->|thin strokes| G["Centerline"]
+    E -->|both| H["Hybrid"]
+    E -.->|optional GPL sidecar| P["Potrace"]
+    F & G & H & P --> I["Hygiene<br/>union, simplify, holes,<br/>start points"]
+    I --> J["Export<br/>DXF SVG PLT PDF PNG"]
+    D --> K["Depth: height map<br/>cumulative slices + hatch"]
+    K --> L["Depth pack<br/>DXF layers, plan.md/csv/json"]
+```
+
+Each stage is a package under [`lasertrace/`](lasertrace): `ingest.py`, `preprocess/`,
+`engines/`, `hygiene/`, `depth/`, `export/`. Full data flow and coordinate systems are in
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Install
 
@@ -250,6 +292,23 @@ lasertrace face.jpg --preset depth-photo-relief --out face_heightmap.png    # Li
 geometry**, so batch jobs are repeatable and an export you shipped last year
 can be reproduced — every file embeds the job settings that made it.
 
+## Configuration
+
+| Setting | CLI flag | What it controls |
+|---|---|---|
+| Preset / AUTO mode | `--preset`, `-p` | Starting settings; `auto` measures the image and picks one |
+| Finished size | `--width-mm`, `--height-mm` | Output size in real millimetres |
+| Engine / mode | `--engine {contour,potrace,centerline}`, `--mode {outline,centerline,hybrid}` | How shapes are traced |
+| Darkness threshold | `--threshold` | 0–255 cutoff (or Otsu bias) |
+| Detail / smoothness / corners | `--detail`, `--smoothness`, `--corner` | 0–1 trade-offs between fidelity and clean geometry |
+| Minimum feature / despeckle | `--min-feature-mm`, `--despeckle-mm2` | Drop specks and features too small to mark |
+| Node budget | `--node-budget` | Warn when a path gets too complex for EZCAD |
+| DXF output | `--dxf-version {R12,R2000}`, `--curves {polyline,spline}`, `--origin` | Compatibility with your controller software |
+| Depth engraving | `--depth-mm`, `--material`, `--laser-w`, `--removal-um`, `--depth-pack` | Relief depth and pass plan |
+| Your presets | `~/.lasertrace/presets/` | Searched before the built-ins; survives upgrades |
+
+Run `lasertrace --help` for the full list.
+
 ## Presets (shop names)
 
 **AUTO modes** measure the image and derive the settings, then leave the
@@ -354,3 +413,11 @@ Two deliberate constraints keep it that way:
 
 See [NOTICE](NOTICE) for third-party terms and
 [docs/TECH_STACK.md](docs/TECH_STACK.md) for the full dependency licence audit.
+
+---
+
+<div align="center">
+
+Built by **Dylan Smith** / [Juiced Systems](https://github.com/JuicedSystems) · [dielawn.com](https://dielawn.com)
+
+</div>
